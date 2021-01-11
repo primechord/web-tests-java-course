@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite 1" verbose="1">
+    <test name="Group delete">
+        <classes>
+            <class name="addressbook.tests.GroupDeletionTests"/>
+        </classes>
+    </test>
+
+    <test name="Regression">
+        <classes>
+            <class name="addressbook.tests.GroupCreationTests"/>
+            <class name="addressbook.tests.GroupModificationTests"/>
+            <class name="addressbook.tests.GroupDeletionTests"/>
+        </classes>
+    </test>
+</suite>

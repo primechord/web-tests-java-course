@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.8.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+def allureVersion = "2.13.8"
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    version = allureVersion
+
+    clean = true
+
+    useTestNG {
+        version = allureVersion
+    }
+}
+
+dependencies {
+    testImplementation group: 'org.testng', name: 'testng', version: '7.3.0'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.18.1'
+    testImplementation group: 'com.codeborne', name: 'selenide', version: '5.16.2'
+    testImplementation group: 'io.qameta.allure', name: 'allure-java-commons', version: "$allureVersion"
+    compile group: 'io.qameta.allure', name: 'allure-selenide', version: "$allureVersion"
+    runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.6'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'com.beust', name: 'jcommander', version: '1.78'
+    implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.14'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.25.Final'
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+test {
+    ignoreFailures = true
+    useTestNG()
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('local')) {
+        systemProperty 'local', "${local}"
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
+
+task Example1(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/Suite-1.xml'
+    }
+}
+
+task Example2(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/Suite-2.xml'
+    }
+}
